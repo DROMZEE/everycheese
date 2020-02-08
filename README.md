@@ -1,0 +1,2 @@
+# everycheese
+Django project
