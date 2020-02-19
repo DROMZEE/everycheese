@@ -45,15 +45,9 @@ LOCALE_PATHS = [ROOT_DIR.path("locale")]
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
 DATABASES = {
-    #"default": env.db("DATABASE_URL", default="postgresql:///everycheese")
+    #"default": env.db("DATABASE_URL", default="postgres:///everycheese")
     "default": env.db("DATABASE_URL", default="postgresql://ubicd:Ab12@localhost:5433/everycheese")
 }
-""" DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-} """
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
 
@@ -236,7 +230,7 @@ EMAIL_TIMEOUT = 5
 # Django Admin URL.
 ADMIN_URL = "admin/"
 # https://docs.djangoproject.com/en/dev/ref/settings/#admins
-ADMINS = [("""dromzee""", "example@dromzee.fr")]
+ADMINS = [("""ubicd""", "ubicd@example.com")]
 # https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS
 

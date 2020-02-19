@@ -1,5 +1,8 @@
 import pytest
 from django.test import RequestFactory
+from django.contrib.messages.middleware import MessageMiddleware
+from django.contrib.sessions.middleware import SessionMiddleware
+from django.urls import reverse
 
 from everycheese.users.models import User
 from everycheese.users.views import UserRedirectView, UserUpdateView
@@ -33,6 +36,21 @@ class TestUserUpdateView:
         view.request = request
 
         assert view.get_object() == user
+
+    def test_form_valid(self, user: User, request_factory: RequestFactory):
+        form_data = {"name": "John Doe"}
+        request = request_factory.post(reverse("users:update"), form_data)
+        request.user = user
+        session_middleware = SessionMiddleware()
+        session_middleware.process_request(request)
+        msg_middleware = MessageMiddleware()
+        msg_middleware.process_request(request)
+
+        response = UserUpdateView.as_view()(request)
+        user.refresh_from_db()
+
+        assert response.status_code == 302
+        assert user.name == form_data["name"]
 
 
 class TestUserRedirectView:
