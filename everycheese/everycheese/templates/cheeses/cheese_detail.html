@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load avatar_tags %}
 {% block title %}Cheeses: {{ cheese.name }}{% endblock %}
 {% block content %}
 <h2>{{ cheese.name }}</h2>
@@ -14,5 +15,25 @@
         <img src="{{ cheese.country_of_origin.flag }}" />
     </p>
 {% endif %}
+
+<hr/>
+<h3>Submitted By</h3>
+<div class="media">
+    <div class="media-left">
+        <a href="{% url 'users:detail' cheese.creator.username %}">
+            {% avatar cheese.creator %}
+        </a>
+    </div>
+    <div class="media-body">
+        <h4 class="media-heading">
+            <a href="{% url 'users:detail' cheese.creator.username %}">
+                {{ cheese.creator.username }}
+            </a>
+        </h4>
+        {% if cheese.creator.name %}
+            <p>{{ cheese.creator.name }}</p>
+        {% endif %}
+    </div>
+</div>
 
 {% endblock content %}
