@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from autoslug import AutoSlugField
 from model_utils.models import TimeStampedModel
@@ -37,3 +38,5 @@ class Cheese(TimeStampedModel):
     def get_absolute_url(self):
         """Return absolute URL to the Cheese Detail page."""
         return reverse('cheeses:detail', kwargs={"slug": self.slug})
+
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
